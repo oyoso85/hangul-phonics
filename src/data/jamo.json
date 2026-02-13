@@ -1,0 +1,30 @@
+{
+  "consonants": [
+    { "id": "giyeok", "letter": "ㄱ", "type": "consonant", "name": "기역", "exampleWord": "가방", "emoji": "🎒" },
+    { "id": "nieun", "letter": "ㄴ", "type": "consonant", "name": "니은", "exampleWord": "나비", "emoji": "🦋" },
+    { "id": "digeut", "letter": "ㄷ", "type": "consonant", "name": "디귿", "exampleWord": "다리", "emoji": "🌉" },
+    { "id": "rieul", "letter": "ㄹ", "type": "consonant", "name": "리을", "exampleWord": "라면", "emoji": "🍜" },
+    { "id": "mieum", "letter": "ㅁ", "type": "consonant", "name": "미음", "exampleWord": "마우스", "emoji": "🖱️" },
+    { "id": "bieup", "letter": "ㅂ", "type": "consonant", "name": "비읍", "exampleWord": "바나나", "emoji": "🍌" },
+    { "id": "siot", "letter": "ㅅ", "type": "consonant", "name": "시옷", "exampleWord": "사과", "emoji": "🍎" },
+    { "id": "ieung", "letter": "ㅇ", "type": "consonant", "name": "이응", "exampleWord": "아이스크림", "emoji": "🍦" },
+    { "id": "jieut", "letter": "ㅈ", "type": "consonant", "name": "지읒", "exampleWord": "자동차", "emoji": "🚗" },
+    { "id": "chieut", "letter": "ㅊ", "type": "consonant", "name": "치읓", "exampleWord": "치즈", "emoji": "🧀" },
+    { "id": "kieuk", "letter": "ㅋ", "type": "consonant", "name": "키읔", "exampleWord": "코끼리", "emoji": "🐘" },
+    { "id": "tieut", "letter": "ㅌ", "type": "consonant", "name": "티읕", "exampleWord": "토끼", "emoji": "🐰" },
+    { "id": "pieup", "letter": "ㅍ", "type": "consonant", "name": "피읖", "exampleWord": "포도", "emoji": "🍇" },
+    { "id": "hieut", "letter": "ㅎ", "type": "consonant", "name": "히읗", "exampleWord": "하마", "emoji": "🦛" }
+  ],
+  "vowels": [
+    { "id": "a", "letter": "ㅏ", "type": "vowel", "name": "아", "exampleWord": "아기", "emoji": "👶" },
+    { "id": "ya", "letter": "ㅑ", "type": "vowel", "name": "야", "exampleWord": "야구", "emoji": "⚾" },
+    { "id": "eo", "letter": "ㅓ", "type": "vowel", "name": "어", "exampleWord": "어머니", "emoji": "👩" },
+    { "id": "yeo", "letter": "ㅕ", "type": "vowel", "name": "여", "exampleWord": "여우", "emoji": "🦊" },
+    { "id": "o", "letter": "ㅗ", "type": "vowel", "name": "오", "exampleWord": "오리", "emoji": "🦆" },
+    { "id": "yo", "letter": "ㅛ", "type": "vowel", "name": "요", "exampleWord": "요리", "emoji": "🍳" },
+    { "id": "u", "letter": "ㅜ", "type": "vowel", "name": "우", "exampleWord": "우유", "emoji": "🥛" },
+    { "id": "yu", "letter": "ㅠ", "type": "vowel", "name": "유", "exampleWord": "유치원", "emoji": "🏫" },
+    { "id": "eu", "letter": "ㅡ", "type": "vowel", "name": "으", "exampleWord": "으르렁", "emoji": "🦁" },
+    { "id": "i", "letter": "ㅣ", "type": "vowel", "name": "이", "exampleWord": "이빨", "emoji": "🦷" }
+  ]
+}

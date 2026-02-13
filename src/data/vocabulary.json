@@ -1,0 +1,74 @@
+{
+  "categories": {
+    "food": [
+      { "id": "sagwa", "spelling": "사과", "emoji": "🍎" },
+      { "id": "banana", "spelling": "바나나", "emoji": "🍌" },
+      { "id": "podoh", "spelling": "포도", "emoji": "🍇" },
+      { "id": "ttalgi", "spelling": "딸기", "emoji": "🍓" },
+      { "id": "subak", "spelling": "수박", "emoji": "🍉" },
+      { "id": "ppang", "spelling": "빵", "emoji": "🍞" },
+      { "id": "uyu", "spelling": "우유", "emoji": "🥛" },
+      { "id": "bap", "spelling": "밥", "emoji": "🍚" },
+      { "id": "gyeran", "spelling": "계란", "emoji": "🥚" },
+      { "id": "gimbap", "spelling": "김밥", "emoji": "🍙" },
+      { "id": "ramyeon", "spelling": "라면", "emoji": "🍜" },
+      { "id": "chikin", "spelling": "치킨", "emoji": "🍗" }
+    ],
+    "animals": [
+      { "id": "gangaji", "spelling": "강아지", "emoji": "🐶" },
+      { "id": "goyangi", "spelling": "고양이", "emoji": "🐱" },
+      { "id": "tokki", "spelling": "토끼", "emoji": "🐰" },
+      { "id": "gom", "spelling": "곰", "emoji": "🐻" },
+      { "id": "saja", "spelling": "사자", "emoji": "🦁" },
+      { "id": "kokkiri", "spelling": "코끼리", "emoji": "🐘" },
+      { "id": "wonsungi", "spelling": "원숭이", "emoji": "🐵" },
+      { "id": "mulkogi", "spelling": "물고기", "emoji": "🐟" },
+      { "id": "sae", "spelling": "새", "emoji": "🐦" },
+      { "id": "horangi", "spelling": "호랑이", "emoji": "🐯" },
+      { "id": "girafee", "spelling": "기린", "emoji": "🦒" },
+      { "id": "panda", "spelling": "판다", "emoji": "🐼" }
+    ],
+    "vehicles": [
+      { "id": "jadongcha", "spelling": "자동차", "emoji": "🚗" },
+      { "id": "beoseu", "spelling": "버스", "emoji": "🚌" },
+      { "id": "gicha", "spelling": "기차", "emoji": "🚂" },
+      { "id": "bihaenggi", "spelling": "비행기", "emoji": "✈️" },
+      { "id": "jajeongeo", "spelling": "자전거", "emoji": "🚲" },
+      { "id": "bae", "spelling": "배", "emoji": "🚢" },
+      { "id": "taeksi", "spelling": "택시", "emoji": "🚕" },
+      { "id": "ambulance", "spelling": "구급차", "emoji": "🚑" },
+      { "id": "sohbangcha", "spelling": "소방차", "emoji": "🚒" },
+      { "id": "roket", "spelling": "로켓", "emoji": "🚀" },
+      { "id": "helicopter", "spelling": "헬리콥터", "emoji": "🚁" },
+      { "id": "truk", "spelling": "트럭", "emoji": "🚛" }
+    ],
+    "body": [
+      { "id": "meori", "spelling": "머리", "emoji": "🧑" },
+      { "id": "nun", "spelling": "눈", "emoji": "👁️" },
+      { "id": "gwi", "spelling": "귀", "emoji": "👂" },
+      { "id": "ko", "spelling": "코", "emoji": "👃" },
+      { "id": "ip", "spelling": "입", "emoji": "👄" },
+      { "id": "son", "spelling": "손", "emoji": "🖐️" },
+      { "id": "bal", "spelling": "발", "emoji": "🦶" },
+      { "id": "pal", "spelling": "팔", "emoji": "💪" },
+      { "id": "dari", "spelling": "다리", "emoji": "🦵" },
+      { "id": "bae-body", "spelling": "배", "emoji": "🫃" },
+      { "id": "eokae", "spelling": "어깨", "emoji": "🤷" },
+      { "id": "mok", "spelling": "목", "emoji": "🦒" }
+    ],
+    "nature": [
+      { "id": "haneul", "spelling": "하늘", "emoji": "🌤️" },
+      { "id": "namu", "spelling": "나무", "emoji": "🌳" },
+      { "id": "kkot", "spelling": "꽃", "emoji": "🌸" },
+      { "id": "san", "spelling": "산", "emoji": "⛰️" },
+      { "id": "bada", "spelling": "바다", "emoji": "🌊" },
+      { "id": "gang", "spelling": "강", "emoji": "🏞️" },
+      { "id": "byeol", "spelling": "별", "emoji": "⭐" },
+      { "id": "dal", "spelling": "달", "emoji": "🌙" },
+      { "id": "hae", "spelling": "해", "emoji": "☀️" },
+      { "id": "bi", "spelling": "비", "emoji": "🌧️" },
+      { "id": "nun-nature", "spelling": "눈", "emoji": "❄️" },
+      { "id": "mulgae", "spelling": "무지개", "emoji": "🌈" }
+    ]
+  }
+}

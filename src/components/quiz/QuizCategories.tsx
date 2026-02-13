@@ -1,0 +1,61 @@
+import { useNavigate, useParams } from 'react-router-dom';
+import { Home, ArrowLeft } from 'lucide-react';
+import { QUIZ_SUBJECTS } from '../../utils/quiz';
+
+const quizTypeLabels: Record<string, string> = {
+  'listen-and-choose': '듣고 고르기',
+  'image-to-word': '그림 보고 단어 고르기',
+  'first-sound': '첫소리 맞추기',
+  'spelling': '받아쓰기',
+};
+
+export default function QuizCategories() {
+  const navigate = useNavigate();
+  const { type } = useParams<{ type: string }>();
+
+  return (
+    <div className="flex flex-col items-center min-h-screen px-6 py-8">
+      <div className="flex items-center justify-between w-full max-w-lg mb-4">
+        <button
+          onClick={() => navigate('/select-category')}
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-4 py-3 rounded-2xl hover:bg-muted active:scale-95"
+        >
+          <Home className="w-5 h-5" />
+          <span className="text-lg font-medium">홈</span>
+        </button>
+        <button
+          onClick={() => navigate('/quiz-types')}
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-4 py-3 rounded-2xl hover:bg-muted active:scale-95"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          <span className="text-lg font-medium">뒤로</span>
+        </button>
+      </div>
+
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-bold text-foreground mb-3 animate-bounce-in animate-fill-both">
+          {quizTypeLabels[type ?? ''] ?? '퀴즈'}
+        </h1>
+        <p className="text-xl text-muted-foreground">주제를 선택하세요</p>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 w-full max-w-lg">
+        {QUIZ_SUBJECTS.map((subj, index) => (
+          <button
+            key={subj.id}
+            onClick={() => navigate(`/quiz/${type}/${subj.id}`)}
+            className="group flex flex-col items-center justify-center bg-white rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 animate-bounce-in animate-fill-both"
+            style={{ animationDelay: `${index * 80}ms` }}
+          >
+            <span className="text-4xl mb-2 group-hover:animate-float transition-transform">
+              {subj.emoji}
+            </span>
+            <span className="text-base font-bold text-foreground text-center">
+              {subj.label}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
