@@ -72,7 +72,7 @@ export default function LetterBuilderAdvanced() {
         {/* Consonants */}
         <div className="flex-1">
           <h2 className="text-center text-sm font-bold text-muted-foreground mb-2">자음</h2>
-          <div className="grid grid-cols-7 gap-1.5 mb-2">
+          <div className="grid grid-cols-5 gap-1.5 mb-2">
             {CONSONANTS_BASIC.map((c) => (
               <button
                 key={c}
