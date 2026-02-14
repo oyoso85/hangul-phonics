@@ -127,14 +127,10 @@ export default function PlayDragAndDrop() {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!touchRef.current.el) return;
+    e.preventDefault();
     const touch = e.touches[0];
     const dx = touch.clientX - touchRef.current.startX;
     const dy = touch.clientY - touchRef.current.startY;
-
-    // 일정 거리 이상 움직이면 스크롤 방지 후 드래그 시작
-    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-      e.preventDefault();
-    }
 
     touchRef.current.el.style.transform = `translate(${dx}px, ${dy}px)`;
     touchRef.current.el.style.transition = 'none';
@@ -149,14 +145,17 @@ export default function PlayDragAndDrop() {
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchRef.current.el) return;
     const el = touchRef.current.el;
+
+    // 스타일 초기화 전에 드롭 대상 감지 (pointerEvents: none 상태에서 카드를 투과하여 바구니 감지)
+    const touch = e.changedTouches[0];
+    const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+    const bucketEl = dropTarget?.closest('[data-bucket]');
+
     el.style.transform = '';
     el.style.transition = '';
     el.style.zIndex = '';
     el.style.pointerEvents = '';
 
-    const touch = e.changedTouches[0];
-    const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
-    const bucketEl = dropTarget?.closest('[data-bucket]');
     if (bucketEl) {
       const bucketId = bucketEl.getAttribute('data-bucket') as VocabularyCategory;
       handleDrop(bucketId, touchRef.current.id);
