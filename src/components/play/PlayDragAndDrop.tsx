@@ -119,6 +119,7 @@ export default function PlayDragAndDrop() {
     }
 
     touchRef.current.el.style.transform = `translate(${dx}px, ${dy}px)`;
+    touchRef.current.el.style.transition = 'none';
     touchRef.current.el.style.zIndex = '50';
     touchRef.current.el.style.pointerEvents = 'none';
   };
@@ -127,6 +128,7 @@ export default function PlayDragAndDrop() {
     if (!touchRef.current.el) return;
     const el = touchRef.current.el;
     el.style.transform = '';
+    el.style.transition = '';
     el.style.zIndex = '';
     el.style.pointerEvents = '';
 
