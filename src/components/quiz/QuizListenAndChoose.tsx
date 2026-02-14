@@ -5,15 +5,15 @@ import { generateQuizQuestions, getSubjectLabel } from '../../utils/quiz';
 import { playAudio, stopAudio } from '../../utils/audio';
 import { playCorrectSound, playWrongSound } from '../../utils/soundEffects';
 
-function isJamoSubject(subject: QuizSubject): boolean {
-  return subject === 'consonant' || subject === 'vowel';
+function isLetterSubject(subject: QuizSubject): boolean {
+  return subject === 'consonant' || subject === 'vowel' || subject === 'syllable' || subject === 'syllable-batchim';
 }
 
 export default function QuizListenAndChoose() {
   const navigate = useNavigate();
   const { category } = useParams<{ type: string; category: string }>();
   const subject = category as QuizSubject;
-  const isJamo = isJamoSubject(subject);
+  const isJamo = isLetterSubject(subject);
 
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,7 +24,8 @@ export default function QuizListenAndChoose() {
 
   useEffect(() => {
     if (subject) {
-      setQuestions(generateQuizQuestions(subject, 5));
+      const count = isLetterSubject(subject) ? 10 : 5;
+      setQuestions(generateQuizQuestions(subject, count));
     }
     return () => stopAudio();
   }, [subject]);

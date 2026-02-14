@@ -63,7 +63,7 @@ export type QuizType = 'listen-and-choose' | 'image-to-word' | 'first-sound' | '
 export type PlayType = 'matching' | 'drag-and-drop';
 
 // 퀴즈/놀이 주제
-export type QuizSubject = 'consonant' | 'vowel' | VocabularyCategory;
+export type QuizSubject = 'consonant' | 'vowel' | 'syllable' | 'syllable-batchim' | VocabularyCategory;
 
 // 퀴즈 문제
 export interface QuizQuestion {

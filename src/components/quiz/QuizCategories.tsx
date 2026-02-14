@@ -1,6 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Home, ArrowLeft } from 'lucide-react';
 import { QUIZ_SUBJECTS } from '../../utils/quiz';
+import type { QuizSubject } from '../../types';
+
+const LETTER_SUBJECTS: QuizSubject[] = ['consonant', 'vowel', 'syllable', 'syllable-batchim'];
 
 const quizTypeLabels: Record<string, string> = {
   'listen-and-choose': '듣고 고르기',
@@ -18,14 +21,14 @@ export default function QuizCategories() {
       <div className="flex items-center justify-between w-full max-w-lg mb-4">
         <button
           onClick={() => navigate('/select-category')}
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-4 py-3 rounded-2xl hover:bg-muted active:scale-95"
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md border border-gray-200 bg-white shadow-sm hover:bg-gray-50 active:scale-95"
         >
           <Home className="w-5 h-5" />
           <span className="text-lg font-medium">홈</span>
         </button>
         <button
           onClick={() => navigate('/quiz-types')}
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-4 py-3 rounded-2xl hover:bg-muted active:scale-95"
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md border border-gray-200 bg-white shadow-sm hover:bg-gray-50 active:scale-95"
         >
           <ArrowLeft className="w-5 h-5" />
           <span className="text-lg font-medium">뒤로</span>
@@ -40,7 +43,7 @@ export default function QuizCategories() {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 w-full max-w-lg">
-        {QUIZ_SUBJECTS.map((subj, index) => (
+        {QUIZ_SUBJECTS.filter((subj) => !(['spelling', 'image-to-word', 'first-sound'].includes(type ?? '') && LETTER_SUBJECTS.includes(subj.id))).map((subj, index) => (
           <button
             key={subj.id}
             onClick={() => navigate(`/quiz/${type}/${subj.id}`)}

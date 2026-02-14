@@ -92,7 +92,7 @@ export default function JamoLearning() {
       <div className="flex items-center justify-between w-full max-w-2xl mb-4">
         <button
           onClick={() => { stop(); navigate('/jamo'); }}
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-4 py-3 rounded-2xl hover:bg-muted active:scale-95"
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md border border-gray-200 bg-white shadow-sm hover:bg-gray-50 active:scale-95"
         >
           <ArrowLeft className="w-5 h-5" />
           <span className="text-lg font-medium">뒤로</span>

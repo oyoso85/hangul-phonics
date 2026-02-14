@@ -112,8 +112,15 @@ export default function PlayDragAndDrop() {
     const touch = e.touches[0];
     const dx = touch.clientX - touchRef.current.startX;
     const dy = touch.clientY - touchRef.current.startY;
+
+    // 일정 거리 이상 움직이면 스크롤 방지 후 드래그 시작
+    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+      e.preventDefault();
+    }
+
     touchRef.current.el.style.transform = `translate(${dx}px, ${dy}px)`;
     touchRef.current.el.style.zIndex = '50';
+    touchRef.current.el.style.pointerEvents = 'none';
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -121,6 +128,7 @@ export default function PlayDragAndDrop() {
     const el = touchRef.current.el;
     el.style.transform = '';
     el.style.zIndex = '';
+    el.style.pointerEvents = '';
 
     const touch = e.changedTouches[0];
     const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -182,6 +190,7 @@ export default function PlayDragAndDrop() {
             onTouchStart={(e) => handleTouchStart(e, card.id)}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            style={{ touchAction: 'none' }}
             className={`flex flex-col items-center justify-center px-4 py-3 rounded-2xl shadow-md bg-white cursor-grab active:cursor-grabbing transition-all select-none ${
               wrongCard === card.id ? 'animate-shake' : ''
             } ${draggingId === card.id ? 'opacity-70 scale-105' : 'hover:scale-105'}`}
