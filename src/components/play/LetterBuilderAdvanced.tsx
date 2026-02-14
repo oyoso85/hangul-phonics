@@ -68,34 +68,22 @@ export default function LetterBuilderAdvanced() {
       </div>
 
       {/* Consonants (left) + Vowels (right) */}
-      <div className="flex gap-4 w-full max-w-lg mb-4">
+      <div className="flex gap-3 w-full max-w-lg mb-4">
         {/* Consonants */}
         <div className="flex-1">
           <h2 className="text-center text-sm font-bold text-muted-foreground mb-2">자음</h2>
-          <div className="grid grid-cols-5 gap-1.5 mb-2">
-            {CONSONANTS_BASIC.map((c) => (
+          <div className="grid grid-cols-4 gap-1.5">
+            {[...CONSONANTS_BASIC, ...CONSONANTS_DOUBLE].map((c) => (
               <button
                 key={c}
                 onClick={() => setSelectedCho(c)}
-                className={`aspect-square rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90
-                  ${selectedCho === c
-                    ? 'bg-blue-500 text-white scale-105 shadow-md'
-                    : 'bg-white text-gray-700 hover:bg-blue-50'
-                  }`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-          <div className="flex justify-center gap-1.5">
-            {CONSONANTS_DOUBLE.map((c) => (
-              <button
-                key={c}
-                onClick={() => setSelectedCho(c)}
-                className={`w-10 h-10 rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90 border-2 border-dashed border-blue-200
+                className={`w-full aspect-square rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90
+                  ${CONSONANTS_DOUBLE.includes(c) ? 'border-2 border-dashed' : ''}
                   ${selectedCho === c
                     ? 'bg-blue-500 text-white scale-105 shadow-md border-blue-500'
-                    : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+                    : CONSONANTS_DOUBLE.includes(c)
+                      ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-200'
+                      : 'bg-white text-gray-700 hover:bg-blue-50'
                   }`}
               >
                 {c}
@@ -107,30 +95,18 @@ export default function LetterBuilderAdvanced() {
         {/* Vowels */}
         <div className="flex-1">
           <h2 className="text-center text-sm font-bold text-muted-foreground mb-2">모음</h2>
-          <div className="grid grid-cols-5 gap-1.5 mb-2">
-            {VOWELS_BASIC.map((v) => (
+          <div className="grid grid-cols-4 gap-1.5">
+            {[...VOWELS_BASIC, ...VOWELS_COMPLEX].map((v) => (
               <button
                 key={v}
                 onClick={() => setSelectedJung(v)}
-                className={`aspect-square rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90
-                  ${selectedJung === v
-                    ? 'bg-rose-500 text-white scale-105 shadow-md'
-                    : 'bg-white text-gray-700 hover:bg-rose-50'
-                  }`}
-              >
-                {v}
-              </button>
-            ))}
-          </div>
-          <div className="flex flex-wrap justify-center gap-1.5">
-            {VOWELS_COMPLEX.map((v) => (
-              <button
-                key={v}
-                onClick={() => setSelectedJung(v)}
-                className={`w-10 h-10 rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90 border-2 border-dashed border-rose-200
+                className={`w-full aspect-square rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90
+                  ${VOWELS_COMPLEX.includes(v) ? 'border-2 border-dashed' : ''}
                   ${selectedJung === v
                     ? 'bg-rose-500 text-white scale-105 shadow-md border-rose-500'
-                    : 'bg-rose-50 text-rose-700 hover:bg-rose-100'
+                    : VOWELS_COMPLEX.includes(v)
+                      ? 'bg-rose-50 text-rose-700 hover:bg-rose-100 border-rose-200'
+                      : 'bg-white text-gray-700 hover:bg-rose-50'
                   }`}
               >
                 {v}
