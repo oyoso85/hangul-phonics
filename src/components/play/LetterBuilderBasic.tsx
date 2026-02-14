@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { ALL_CONSONANTS, ALL_VOWELS, composeHangul } from '../../utils/hangul';
+import { CONSONANTS_BASIC, CONSONANTS_DOUBLE, VOWELS_BASIC, VOWELS_COMPLEX, composeHangul } from '../../utils/hangul';
 import { playSyllable } from '../../utils/audio';
 
 export default function LetterBuilderBasic() {
@@ -9,27 +9,20 @@ export default function LetterBuilderBasic() {
   const [selectedCho, setSelectedCho] = useState<string | null>(null);
   const [selectedJung, setSelectedJung] = useState<string | null>(null);
   const [history, setHistory] = useState<string[]>([]);
-  const prevLetterRef = useRef<string | null>(null);
 
   const composed = selectedCho && selectedJung ? composeHangul(selectedCho, selectedJung) : null;
 
-  useEffect(() => {
-    if (composed && composed !== prevLetterRef.current) {
-      prevLetterRef.current = composed;
-      playSyllable(composed).catch(() => {});
-      setHistory((prev) => {
-        const filtered = prev.filter((c) => c !== composed);
-        const next = [...filtered, composed];
-        return next.slice(-5);
-      });
-      // 선택 해제 (다음 글자를 처음부터 선택)
-      setTimeout(() => {
-        setSelectedCho(null);
-        setSelectedJung(null);
-        prevLetterRef.current = null;
-      }, 600);
-    }
-  }, [composed]);
+  const handleComplete = () => {
+    if (!composed) return;
+    playSyllable(composed).catch(() => {});
+    setHistory((prev) => {
+      const filtered = prev.filter((c) => c !== composed);
+      const next = [...filtered, composed];
+      return next.slice(-5);
+    });
+    setSelectedCho(null);
+    setSelectedJung(null);
+  };
 
   const handleHistoryTap = (char: string) => {
     playSyllable(char).catch(() => {});
@@ -48,20 +41,26 @@ export default function LetterBuilderBasic() {
         </button>
       </div>
 
-      {/* Composed letter display */}
-      <div className="flex items-center justify-center w-full max-w-lg mb-6">
+      {/* Composed letter display + 완성 button */}
+      <div className="flex items-center justify-center gap-4 w-full max-w-lg mb-6">
         <div className="w-32 h-32 rounded-3xl bg-white shadow-lg flex items-center justify-center border-4 border-blue-200">
           {composed ? (
-            <button
-              onClick={() => playSyllable(composed).catch(() => {})}
-              className="text-7xl font-bold text-blue-600 hover:scale-110 transition-transform active:scale-95"
-            >
-              {composed}
-            </button>
+            <span className="text-7xl font-bold text-blue-600">{composed}</span>
           ) : (
             <span className="text-2xl text-muted-foreground">?</span>
           )}
         </div>
+        <button
+          onClick={handleComplete}
+          disabled={!composed}
+          className={`px-6 py-4 rounded-2xl text-xl font-bold shadow-lg transition-all active:scale-95
+            ${composed
+              ? 'bg-blue-500 text-white hover:bg-blue-600 hover:shadow-xl'
+              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+            }`}
+        >
+          완성!
+        </button>
       </div>
 
       {/* Consonants (left) + Vowels (right) */}
@@ -69,15 +68,30 @@ export default function LetterBuilderBasic() {
         {/* Consonants */}
         <div className="flex-1">
           <h2 className="text-center text-sm font-bold text-muted-foreground mb-2">자음</h2>
-          <div className="grid grid-cols-5 gap-1.5">
-            {ALL_CONSONANTS.map((c) => (
+          <div className="grid grid-cols-7 gap-1.5 mb-2">
+            {CONSONANTS_BASIC.map((c) => (
               <button
                 key={c}
                 onClick={() => setSelectedCho(c)}
-                className={`aspect-square rounded-xl text-xl font-bold shadow-sm transition-all active:scale-90
+                className={`aspect-square rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90
                   ${selectedCho === c
                     ? 'bg-blue-500 text-white scale-105 shadow-md'
                     : 'bg-white text-gray-700 hover:bg-blue-50'
+                  }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+          <div className="flex justify-center gap-1.5">
+            {CONSONANTS_DOUBLE.map((c) => (
+              <button
+                key={c}
+                onClick={() => setSelectedCho(c)}
+                className={`w-10 h-10 rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90 border-2 border-dashed border-blue-200
+                  ${selectedCho === c
+                    ? 'bg-blue-500 text-white scale-105 shadow-md border-blue-500'
+                    : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
                   }`}
               >
                 {c}
@@ -89,15 +103,30 @@ export default function LetterBuilderBasic() {
         {/* Vowels */}
         <div className="flex-1">
           <h2 className="text-center text-sm font-bold text-muted-foreground mb-2">모음</h2>
-          <div className="grid grid-cols-4 gap-1.5">
-            {ALL_VOWELS.map((v) => (
+          <div className="grid grid-cols-5 gap-1.5 mb-2">
+            {VOWELS_BASIC.map((v) => (
               <button
                 key={v}
                 onClick={() => setSelectedJung(v)}
-                className={`aspect-square rounded-xl text-xl font-bold shadow-sm transition-all active:scale-90
+                className={`aspect-square rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90
                   ${selectedJung === v
                     ? 'bg-rose-500 text-white scale-105 shadow-md'
                     : 'bg-white text-gray-700 hover:bg-rose-50'
+                  }`}
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap justify-center gap-1.5">
+            {VOWELS_COMPLEX.map((v) => (
+              <button
+                key={v}
+                onClick={() => setSelectedJung(v)}
+                className={`w-10 h-10 rounded-xl text-lg font-bold shadow-sm transition-all active:scale-90 border-2 border-dashed border-rose-200
+                  ${selectedJung === v
+                    ? 'bg-rose-500 text-white scale-105 shadow-md border-rose-500'
+                    : 'bg-rose-50 text-rose-700 hover:bg-rose-100'
                   }`}
               >
                 {v}

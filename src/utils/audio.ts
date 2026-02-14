@@ -53,10 +53,12 @@ export function syllableAudioPath(syllable: string): string {
   return `${BASE}audio/syllables/${encodeURIComponent(syllable)}.mp3`;
 }
 
-// 음절 발음 재생 (MP3 우선, TTS fallback)
+// 음절 발음 재생 (정규화된 발음의 MP3 우선, TTS fallback)
 export async function playSyllable(syllable: string): Promise<void> {
+  const { normalizeForAudio } = await import('./hangul');
+  const normalized = normalizeForAudio(syllable);
   try {
-    await playAudio(syllableAudioPath(syllable));
+    await playAudio(syllableAudioPath(normalized));
   } catch {
     // MP3 없으면 TTS fallback
     return speakText(syllable);
