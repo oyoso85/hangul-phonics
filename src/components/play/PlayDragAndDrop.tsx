@@ -39,6 +39,7 @@ export default function PlayDragAndDrop() {
   const [sortedCount, setSortedCount] = useState(0);
   const [wrongCard, setWrongCard] = useState<string | null>(null);
   const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [hoveredBucket, setHoveredBucket] = useState<string | null>(null);
   const totalCards = 8;
 
   const touchRef = useRef<{ id: string; startX: number; startY: number; el: HTMLElement | null }>({ id: '', startX: 0, startY: 0, el: null });
@@ -73,6 +74,7 @@ export default function PlayDragAndDrop() {
       setTimeout(() => setWrongCard(null), 500);
     }
     setDraggingId(null);
+    setHoveredBucket(null);
   };
 
   useEffect(() => {
@@ -92,6 +94,22 @@ export default function PlayDragAndDrop() {
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
+  };
+
+  const handleDragEnter = (bucketId: string) => {
+    setHoveredBucket(bucketId);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    const related = e.relatedTarget as HTMLElement | null;
+    if (!related || !e.currentTarget.contains(related)) {
+      setHoveredBucket(null);
+    }
+  };
+
+  const handleDragEnd = () => {
+    setDraggingId(null);
+    setHoveredBucket(null);
   };
 
   const handleDropEvent = (e: React.DragEvent, bucketId: VocabularyCategory) => {
@@ -122,6 +140,10 @@ export default function PlayDragAndDrop() {
     touchRef.current.el.style.transition = 'none';
     touchRef.current.el.style.zIndex = '50';
     touchRef.current.el.style.pointerEvents = 'none';
+
+    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+    const bucketEl = target?.closest('[data-bucket]');
+    setHoveredBucket(bucketEl ? bucketEl.getAttribute('data-bucket') : null);
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -140,6 +162,7 @@ export default function PlayDragAndDrop() {
       handleDrop(bucketId, touchRef.current.id);
     }
     setDraggingId(null);
+    setHoveredBucket(null);
     touchRef.current = { id: '', startX: 0, startY: 0, el: null };
   };
 
@@ -160,8 +183,14 @@ export default function PlayDragAndDrop() {
         <div
           data-bucket={bucket1}
           onDragOver={handleDragOver}
+          onDragEnter={() => handleDragEnter(bucket1)}
+          onDragLeave={handleDragLeave}
           onDrop={(e) => handleDropEvent(e, bucket1)}
-          className="flex flex-col items-center justify-center p-6 rounded-3xl border-4 border-dashed border-blue-300 bg-blue-50 min-h-[120px] transition-colors"
+          className={`flex flex-col items-center justify-center p-6 rounded-3xl border-4 border-dashed min-h-[120px] transition-all duration-200 ${
+            hoveredBucket === bucket1
+              ? 'border-blue-500 bg-blue-100 scale-105 shadow-lg'
+              : 'border-blue-300 bg-blue-50'
+          }`}
         >
           <span className="text-4xl mb-1">{b1Info.emoji}</span>
           <span className="font-bold text-blue-700">{b1Info.label}</span>
@@ -172,8 +201,14 @@ export default function PlayDragAndDrop() {
         <div
           data-bucket={bucket2}
           onDragOver={handleDragOver}
+          onDragEnter={() => handleDragEnter(bucket2)}
+          onDragLeave={handleDragLeave}
           onDrop={(e) => handleDropEvent(e, bucket2)}
-          className="flex flex-col items-center justify-center p-6 rounded-3xl border-4 border-dashed border-orange-300 bg-orange-50 min-h-[120px] transition-colors"
+          className={`flex flex-col items-center justify-center p-6 rounded-3xl border-4 border-dashed min-h-[120px] transition-all duration-200 ${
+            hoveredBucket === bucket2
+              ? 'border-orange-500 bg-orange-100 scale-105 shadow-lg'
+              : 'border-orange-300 bg-orange-50'
+          }`}
         >
           <span className="text-4xl mb-1">{b2Info.emoji}</span>
           <span className="font-bold text-orange-700">{b2Info.label}</span>
@@ -189,6 +224,7 @@ export default function PlayDragAndDrop() {
             key={card.id}
             draggable
             onDragStart={(e) => handleDragStart(e, card.id)}
+            onDragEnd={handleDragEnd}
             onTouchStart={(e) => handleTouchStart(e, card.id)}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
