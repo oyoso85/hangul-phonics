@@ -15,11 +15,12 @@ interface DragCard {
 }
 
 function pickTwoBuckets(current: QuizSubject): { bucket1: VocabularyCategory; bucket2: VocabularyCategory } {
+  const LETTER_SUBJECTS = ['consonant', 'vowel', 'syllable', 'syllable-batchim'];
   const vocabCategories = QUIZ_SUBJECTS
-    .filter((s) => s.id !== 'consonant' && s.id !== 'vowel')
+    .filter((s) => !LETTER_SUBJECTS.includes(s.id))
     .map((s) => s.id as VocabularyCategory);
 
-  if (current === 'consonant' || current === 'vowel') {
+  if (LETTER_SUBJECTS.includes(current)) {
     const shuffled = shuffle(vocabCategories);
     return { bucket1: shuffled[0], bucket2: shuffled[1] };
   }
