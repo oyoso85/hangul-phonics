@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# OpenSpec planning artifacts (local only)
+openspec/
+
+# Claude Code session files
+.claude/
