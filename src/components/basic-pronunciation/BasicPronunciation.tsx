@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home } from 'lucide-react';
-import { CONSONANTS_BASIC, VOWELS_BASIC, CONSONANT_PHONEMES, VOWEL_PHONEMES } from '../../utils/hangul';
+import { Home, RotateCcw } from 'lucide-react';
+import { CONSONANTS_BASIC, VOWELS_BASIC, CONSONANT_PHONEMES, VOWEL_PHONEMES, composeHangul } from '../../utils/hangul';
 import { speakText, wait } from '../../utils/audio';
 
 export default function BasicPronunciation() {
@@ -15,6 +15,7 @@ export default function BasicPronunciation() {
     const choSound = CONSONANT_PHONEMES[cho] ?? cho;
     const jungSound = VOWEL_PHONEMES[jung] ?? jung;
     const combined = choSound + jungSound;
+    const syllable = composeHangul(cho, jung) ?? combined;
 
     cancelledRef.current = false;
     setIsPlaying(true);
@@ -40,6 +41,13 @@ export default function BasicPronunciation() {
 
       // 3단계: 결합 텍스트 빠르게 재생 (rate 1.4)
       await speakText(combined, 'ko-KR', 1.4);
+      if (cancelledRef.current) return;
+
+      await wait(600);
+      if (cancelledRef.current) return;
+
+      // 4단계: 완성 글자 정확한 발음 (rate 1.0)
+      await speakText(syllable, 'ko-KR', 1.0);
     } catch {
       // silent fail
     } finally {
@@ -69,6 +77,17 @@ export default function BasicPronunciation() {
     };
   }, []);
 
+  const handleReplay = useCallback(() => {
+    if (!selectedCho || !selectedJung || isPlaying) return;
+    cancelledRef.current = true;
+    speechSynthesis.cancel();
+    setTimeout(() => {
+      playBlendingSequence(selectedCho, selectedJung);
+    }, 50);
+  }, [selectedCho, selectedJung, isPlaying, playBlendingSequence]);
+
+  const composedChar = selectedCho && selectedJung ? composeHangul(selectedCho, selectedJung) : null;
+
   return (
     <div className="flex flex-col items-center min-h-screen px-4 py-6">
       {/* Header */}
@@ -89,24 +108,40 @@ export default function BasicPronunciation() {
         <p className="text-base text-muted-foreground">자음과 모음을 선택하면 발음을 들려줘요</p>
       </div>
 
-      {/* 선택 표시 + 재생 인디케이터 */}
-      <div className="flex items-center justify-center gap-3 w-full max-w-lg mb-6">
-        <div className="w-20 h-20 rounded-2xl bg-white shadow-lg flex items-center justify-center border-4 border-blue-200">
-          <span className={`text-4xl font-bold ${selectedCho ? 'text-blue-600' : 'text-gray-300'}`}>
+      {/* 선택 표시: 자음 + 모음 = 완성글자 */}
+      <div className="flex items-center justify-center gap-2 w-full max-w-lg mb-2">
+        <div className="w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center border-4 border-blue-200">
+          <span className={`text-3xl font-bold ${selectedCho ? 'text-blue-600' : 'text-gray-300'}`}>
             {selectedCho ?? 'ㅡ'}
           </span>
         </div>
-        <div className="flex flex-col items-center gap-1">
-          <span className="text-2xl text-muted-foreground">+</span>
-          {isPlaying && (
-            <span className="text-xs text-blue-500 font-medium animate-pulse">재생 중</span>
-          )}
-        </div>
-        <div className="w-20 h-20 rounded-2xl bg-white shadow-lg flex items-center justify-center border-4 border-rose-200">
-          <span className={`text-4xl font-bold ${selectedJung ? 'text-rose-500' : 'text-gray-300'}`}>
+        <span className="text-xl font-bold text-muted-foreground">+</span>
+        <div className="w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center border-4 border-rose-200">
+          <span className={`text-3xl font-bold ${selectedJung ? 'text-rose-500' : 'text-gray-300'}`}>
             {selectedJung ?? 'ㅡ'}
           </span>
         </div>
+        <span className="text-xl font-bold text-muted-foreground">=</span>
+        <div className="w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center border-4 border-emerald-200">
+          <span className={`text-3xl font-bold ${composedChar ? 'text-emerald-600' : 'text-gray-300'}`}>
+            {composedChar ?? '?'}
+          </span>
+        </div>
+      </div>
+
+      {/* 재생 상태 + 다시 듣기 버튼 */}
+      <div className="flex items-center justify-center h-10 mb-4">
+        {isPlaying ? (
+          <span className="text-sm text-blue-500 font-medium animate-pulse">재생 중...</span>
+        ) : (selectedCho && selectedJung) ? (
+          <button
+            onClick={handleReplay}
+            className="flex items-center gap-1.5 px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-medium shadow hover:bg-blue-600 active:scale-95 transition-all"
+          >
+            <RotateCcw className="w-4 h-4" />
+            다시 듣기
+          </button>
+        ) : null}
       </div>
 
       {/* 자음 + 모음 그리드 */}
