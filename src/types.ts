@@ -54,7 +54,7 @@ export interface UserProfile {
 }
 
 // 학습 카테고리
-export type LearningCategory = 'jamo' | 'vocabulary' | 'sentence' | 'quiz' | 'play';
+export type LearningCategory = 'jamo' | 'vocabulary' | 'sentence' | 'quiz' | 'play' | 'basic-pronunciation';
 
 // 퀴즈 유형
 export type QuizType = 'listen-and-choose' | 'image-to-word' | 'first-sound' | 'spelling';

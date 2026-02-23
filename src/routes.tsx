@@ -22,6 +22,7 @@ import PlayDragAndDrop from './components/play/PlayDragAndDrop'
 import LetterBuilderModes from './components/play/LetterBuilderModes'
 import LetterBuilderBasic from './components/play/LetterBuilderBasic'
 import LetterBuilderAdvanced from './components/play/LetterBuilderAdvanced'
+import BasicPronunciation from './components/basic-pronunciation/BasicPronunciation'
 
 export const AppRoutes = () => {
   return (
@@ -59,6 +60,9 @@ export const AppRoutes = () => {
       <Route path="/play/letter-builder" element={<LetterBuilderModes />} />
       <Route path="/play/letter-builder/basic" element={<LetterBuilderBasic />} />
       <Route path="/play/letter-builder/advanced" element={<LetterBuilderAdvanced />} />
+
+      {/* 기초 발음 */}
+      <Route path="/basic-pronunciation" element={<BasicPronunciation />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

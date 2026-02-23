@@ -66,12 +66,12 @@ export async function playSyllable(syllable: string): Promise<void> {
 }
 
 // TTS (Web Speech API)
-export function speakText(text: string, lang = 'ko-KR'): Promise<void> {
+export function speakText(text: string, lang = 'ko-KR', rate = 0.8): Promise<void> {
   return new Promise((resolve, reject) => {
     speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang;
-    utterance.rate = 0.8;
+    utterance.rate = rate;
     utterance.onend = () => resolve();
     utterance.onerror = (e) => reject(e);
     speechSynthesis.speak(utterance);
