@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
+const SUGGESTED_NAMES = ['토끼', '햇님', '별이', '구름', '하루', '봄이', '달님', '콩이', '솜이', '은별'];
+
 export default function NicknameInput() {
   const { state, setUser } = useAppContext();
   const navigate = useNavigate();
@@ -51,6 +53,24 @@ export default function NicknameInput() {
           {error && (
             <p className="text-destructive text-sm mb-2">{error}</p>
           )}
+
+          <div className="flex flex-wrap justify-center gap-2 mt-3 mb-1">
+            {SUGGESTED_NAMES.map((name) => (
+              <button
+                key={name}
+                type="button"
+                onClick={() => { setNickname(name); setError(''); }}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-all active:scale-95
+                  ${nickname === name
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-muted text-muted-foreground border-muted hover:border-primary hover:text-primary'
+                  }`}
+              >
+                {name}
+              </button>
+            ))}
+          </div>
+
           <button
             type="submit"
             className="w-full mt-4 py-4 bg-primary hover:bg-primary/90 text-primary-foreground text-xl font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-lg"
